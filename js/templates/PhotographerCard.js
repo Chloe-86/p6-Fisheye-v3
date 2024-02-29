@@ -1,7 +1,9 @@
-class photographerCard {
-  constructor(photographer, media) {
+class PhotographerCard {
+  constructor(photographer, media, url, namePerson) {
     this.photographer = photographer;
     this.media = media;
+    this.url = url;
+    this.namePerson = namePerson;
   }
 
   getHeader() {
@@ -50,21 +52,26 @@ class photographerCard {
 
   getUserCardMedia() {
     const $wrapper = document.createElement("div");
-
+    $wrapper.classList.add('card-wrapper');
+ 
     const photographerCardMedia = `
     <article class="card">
         <div class="containerImage">
-            <img src="assets/images/sample_photo/${this.photographer.name}/${this.media.image}">
+           <a href="../assets/images/sample_photo/${this.photographer.name}/${this.media.image}">
+             <img src="assets/images/sample_photo/${this.photographer.name}/${this.media.image}">
+            </a>
             </div>
             <div class="containerInfo">
-                <p>${this.media.title}</p>
-                <div class="likes"><p>72</p>
+                <p >${this.media.title}</p>
+                <div class="likes"><p>${this.media.likes}</p>
                     <img src="assets/images/svg/like.svg" class="clicklike">
                 </div>
             </div>
         </div>
     </article>
         `;
+       
+
 
     $wrapper.innerHTML = photographerCardMedia;
     return $wrapper;

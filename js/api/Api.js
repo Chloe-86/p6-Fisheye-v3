@@ -16,7 +16,7 @@ class Api {
 }
 
 
-class photographersApi extends Api {
+class PhotographersApi extends Api {
     /**
      * 
      * @param {string} url 

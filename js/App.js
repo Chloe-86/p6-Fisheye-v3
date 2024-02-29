@@ -3,53 +3,126 @@ class App {
     this.$photographersWrapper = document.querySelector(
       ".photographer_section"
     );
-    this.photographersApi = new photographersApi("/data/photographers.json");
-    this.photos_section = document.querySelector(".photos_section");
-    this.photos_header = document.querySelector(".photograph-head");
+    this.photographersApi = new PhotographersApi("/data/photographers.json");
+    this.photosSection = document.querySelector(".photos_section");
+    this.photosHeader = document.querySelector(".photograph-head");
   }
 
   async main() {
     const media = await this.photographersApi.getMedias();
-    const photos = await this.photographersApi.getPhotographers();
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
+    const photographers = await this.photographersApi.getPhotographers();
+    const id = this.getPhotographerIdFromUrl();
+    const isVideoFormat = ".mp4";
 
     if (window.location.pathname === "/") {
-      photos.forEach((photographer) => {
-        const Template = new photographerCard(photographer);
-        this.$photographersWrapper.appendChild(Template.getUserCardDOM());
-      });
+      this.renderPhotographers(photographers);
     }
-    //affiche les tableaux des photographes
-    const photographerMedia = media.filter(
-      (item) => item.photographerId === parseInt(id)
-    );
-    if (photographerMedia) {
-      photographerMedia.forEach((mediaItem) => {
-        const photographer = photos.find(
-          (p) => p.id == mediaItem.photographerId
-        );
-        console.log(photographer);
-        const Template = new photographerCard(photographer, mediaItem);
-        this.photos_section.appendChild(Template.getUserCardMedia());
+   
+    if (id) {
+      this.renderPhotographerHeader(photographers, id);
+      this.renderPhotographerMedia(photographers, media, id);
+        // Vos opérations existantes...
+    this.SorterForm = new SorterForm(photographers, media);
+    this.SorterForm.render();
+    }
+  
+  }
+
+  likeHeartEventListeners() {
+    let likes = document.querySelectorAll(".clicklike");
+
+    likes.forEach((like) => {
+      like.addEventListener("click", (e) => {
+        if (!like.classList.contains("clicked")) {
+          // Vérifie si le like n'a pas déjà été cliqué
+          const likeNumber = e.target.previousElementSibling;
+          let likeNumberValue = parseInt(
+            likeNumber.textContent.trim().replace(/['"]+/g, "")
+          );
+          let newLikeValue = likeNumberValue + 1;
+          likeNumber.textContent = newLikeValue;
+          like.classList.add("clicked"); // Ajoute une classe pour indiquer que le like a été cliqué
+        }
       });
+    });
+  }
+  urlImages(url) {
+    let images = document.querySelectorAll(".containerImage img");
+
+    images.forEach((img) => {
+      img.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!img.classList.contains("clicked")) {
+          url = e.target.src;
+          this.lightbox = new Lightbox(url);
+          this.lightbox.setUrl(url);
+          this.lightbox.render(url);
+          img.classList.add("clicked"); // Ajoute une classe pour indiquer que le like a été cliqué
+        }
+      });
+    });
+  }
+  modalDisplay(namePerson) {
+    const btn = document.querySelector(".contact_button");
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!btn.classList.contains("clicked")) {
+        this.ContactForm = new ContactForm(namePerson);
+        this.ContactForm.setName(namePerson);
+        this.ContactForm.render(namePerson);
+        btn.classList.add("clicked");
+      }
+    });
+  }
+
+  getPhotographerIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("id");
+  }
+
+  renderPhotographers(photographers) {
+    photographers.forEach((photographer) => {
+      const template = new PhotographerCard(photographer);
+      this.$photographersWrapper.appendChild(template.getUserCardDOM());
+    });
+  }
+
+  renderPhotographerHeader(photographers, id) {
+    const photographer = photographers.find((p) => p.id == id);
+    if (photographer) {
+      const header = new PhotographerCard(photographer);
+      this.photosHeader.appendChild(header.getHeader());
     } else {
       console.log("Aucun photographe trouvé avec l'ID spécifié.");
     }
+  }
 
-    if (id) {
-      //affiche le header
-      const photographer = photos.find((p) => p.id == id);
-      console.log(photographer);
-      if (photographer) {
-        const Header = new photographerCard(photographer);
-        this.photos_header.appendChild(Header.getHeader());
-      } else {
-        console.log("Aucun photographe trouvé avec l'ID spécifié.");
-      }
+  renderPhotographerMedia(photographers, media, id, url, namePerson) {
+    const photographerMedia = media.filter(
+      (item) => item.photographerId === parseInt(id)
+    );
+
+    if (photographerMedia.length > 0) {
+      photographerMedia.forEach((mediaItem) => {
+        const photographer = photographers.find(
+          (p) => p.id == mediaItem.photographerId
+        );
+
+        if (photographer) {
+          namePerson = photographer.name;
+          const template = new PhotographerCard(photographer, mediaItem);
+          this.photosSection.appendChild(template.getUserCardMedia());
+        }
+      });
+      this.likeHeartEventListeners();
+      this.urlImages(url);
+      this.modalDisplay(namePerson);
+    } else {
+      console.log("Aucun média trouvé pour ce photographe.");
     }
   }
+  // sortie main
 }
-
+// sortie class
 const app = new App();
 app.main();

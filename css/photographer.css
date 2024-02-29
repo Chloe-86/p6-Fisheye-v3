@@ -21,6 +21,7 @@
   margin-top: 20px;
   font-weight: 400;
   margin-bottom: 3px;
+  text-align: center;
 }
 
 
@@ -116,47 +117,50 @@
 .filter-wrapper{
   position: relative;
 }
-.filter {
+/* .filter {
+  display: flex;
+  gap: 30px;
+  position: absolute;
+  top: -58px;
+} */
+
+.filter label, .filter-select {
+  font-family: "DM Sans";
+  font-size: 18px;
+  font-weight: 700;
+}
+.filter label{
   display: flex;
   gap: 30px;
   position: absolute;
   top: -58px;
 }
 
-.filter p, .filter ul {
+#filter-select option{
   font-family: "DM Sans";
   font-size: 18px;
   font-weight: 700;
-}
-
-.filter p {
-  color: #000;
-  font-family: "DM Sans";
-  font-size: 18px;
-  font-weight: 700;
- 
-}
-
-.filter ul {
-  width: 170px;
-  background-color: #901c1c;
-  color: #fff;
-  padding: 13px 10px 20px ;
-  position: relative;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  overflow: hidden;
-  height: 20px;
-}
-.filter ul li{
   padding-left: 10px;
   padding-bottom: 14px;
   padding-top: 4px;
   cursor: pointer;
 }
-.filter ul li:nth-child(2),.filter ul li:nth-child(3){
+
+#filter-select{
+  width: 170px;
+  background-color: #901c1c;
+  color: #fff;
+  padding: 13px 10px 10px;
+  position: relative;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  overflow: hidden;
+  height: 40px;
+}
+#date,#title{
   padding-top: 14px;
 }
+
 .filter ul li:nth-child(1),.filter ul li:nth-child(2){
   border-bottom: 1px solid white;
 
