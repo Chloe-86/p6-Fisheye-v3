@@ -21,11 +21,9 @@ class App {
     if (id) {
       this.renderPhotographerHeader(photographers, id);
       this.renderPhotographerMedia(photographers, media, id);
-        // Vos opérations existantes...
+    }
     this.SorterForm = new SorterForm(photographers, media);
     this.SorterForm.render();
-    }
-  
   }
 
   likeHeartEventListeners() {
@@ -41,7 +39,7 @@ class App {
           );
           let newLikeValue = likeNumberValue + 1;
           likeNumber.textContent = newLikeValue;
-          like.classList.add("clicked"); // Ajoute une classe pour indiquer que le like a été cliqué
+          like.classList.add("clicked"); 
         }
       });
     });
@@ -57,7 +55,7 @@ class App {
           this.lightbox = new Lightbox(url);
           this.lightbox.setUrl(url);
           this.lightbox.render(url);
-          img.classList.add("clicked"); // Ajoute une classe pour indiquer que le like a été cliqué
+          img.classList.add("clicked"); 
         }
       });
     });
@@ -91,6 +89,7 @@ class App {
     const photographer = photographers.find((p) => p.id == id);
     if (photographer) {
       const header = new PhotographerCard(photographer);
+       //ici deplacer la logique d attache dans le cardmediaheader
       this.photosHeader.appendChild(header.getHeader());
     } else {
       console.log("Aucun photographe trouvé avec l'ID spécifié.");

@@ -39,7 +39,8 @@ class Lightbox {
     const closeButton = this.$wrapper.querySelector(".lightbox__close");
     closeButton.addEventListener("click", (event) => {
       event.preventDefault();
-      this.closeModal(); // Appel de la méthode closeModal() lorsque le bouton de fermeture est cliqué
+      // Appel de la méthode closeModal() lorsque le bouton de fermeture est cliqué
+      this.closeModal(); 
     });
   }
 }
