@@ -1,9 +1,7 @@
 class PhotographerCard {
-  constructor(photographer, media, url, namePerson) {
-    this.photographer = photographer;
-    this.media = media;
-    this.url = url;
-    this.namePerson = namePerson;
+  constructor(photographer, mediaItem) {
+    this.photographerInformation = photographer;
+    this.media = mediaItem;
   }
 
   getHeader() {
@@ -12,13 +10,13 @@ class PhotographerCard {
 
     const headerCard = `
           <div class="info">
-                  <h2>${this.photographer.name}</h2>
-                  <h3> ${this.photographer.city} , ${this.photographer.country} </h3>
-                  <p>${this.photographer.tagline}</p>
+                  <h2>${this.photographerInformation.name}</h2>
+                  <h3> ${this.photographerInformation.city} , ${this.photographerInformation.country} </h3>
+                  <p>${this.photographerInformation.tagline}</p>
            </div>
                   <button class="contact_button">Contactez-moi</button>
                   <div class="photo">
-                    <img alt="${this.photographer.name}" src="/assets/photographers/${this.photographer.portrait}" />
+                    <img alt="${this.photographerInformation.name}" src="/assets/photographers/${this.photographerInformation.portrait}" />
                   </div>
               `;
 
@@ -38,17 +36,17 @@ class PhotographerCard {
 
     const photographerCard = `
         <article>
-            <a href="photographer.html?id=${this.photographer.id}">
+            <a href="photographer.html?id=${this.photographerInformation.id}">
                 <img
-                    alt="${this.photographer.name}"
-                    src="/assets/photographers/${this.photographer.portrait}"
+                    alt="${this.photographerInformation.name}"
+                    src="/assets/photographers/${this.photographerInformation.portrait}"
                 />
             </a>
-            <h2>${this.photographer.name}</h2>
-            <h3> ${this.photographer.city} , ${this.photographer.country} </h3>
+            <h2>${this.photographerInformation.name}</h2>
+            <h3> ${this.photographerInformation.city} , ${this.photographerInformation.country} </h3>
             <p>
-            <span>${this.photographer.tagline}</span>
-            <span>${this.photographer.price}/jour</span> 
+            <span>${this.photographerInformation.tagline}</span>
+            <span>${this.photographerInformation.price}/jour</span> 
             </p>
         </article>
         `;
@@ -65,21 +63,20 @@ class PhotographerCard {
     let image = this.media.image;
     let load = image;
     let mediaElement;
-    if (typeof image !== 'undefined') {
-      mediaElement = `<img src="assets/images/sample_photo/${this.photographer.name}/${image}" alt="${this.media.title}">`;
-      
-  } else if (typeof isVideo !== 'undefined') {
-      mediaElement = `<video autoplay loop controls src="assets/images/sample_photo/${this.photographer.name}/${isVideo} "></video>`;
-      load= isVideo;
-  } else {
+    if (typeof image !== "undefined") {
+      mediaElement = `<img src="assets/images/sample_photo/${this.photographerInformation.name}/${image}" alt="${this.media.title}">`;
+    } else if (typeof isVideo !== "undefined") {
+      mediaElement = `<video autoplay loop controls src="assets/images/sample_photo/${this.photographerInformation.name}/${isVideo} "></video>`;
+      load = isVideo;
+    } else {
       // Gérer le cas où ni l'image ni la vidéo ne sont définies
       mediaElement = "<p>Aucun média disponible</p>";
-  }
+    }
 
     const photographerCardMedia = `
     <article class="card">
         <div class="containerImage">
-           <a href="../assets/images/sample_photo/${this.photographer.name}/${load}">
+           <a href="../assets/images/sample_photo/${this.photographerInformation.name}/${load}">
              ${mediaElement}
             </a>
             </div>

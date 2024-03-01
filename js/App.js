@@ -8,21 +8,18 @@ class App {
     this.photosHeader = document.querySelector(".photograph-head");
   }
 
-  async main() {
-    const media = await this.photographersApi.getMedias();
+  async pageListPhotographes() {
     const photographers = await this.photographersApi.getPhotographers();
-    const id = this.getPhotographerIdFromUrl();
-    const isVideoFormat = ".mp4";
+    this.renderPhotographers(photographers);
+  }
 
-    if (window.location.pathname === "/") {
-      this.renderPhotographers(photographers);
-    }
-   
-    if (id) {
-      this.renderPhotographerHeader(photographers, id);
-      this.renderPhotographerMedia(photographers, media, id);
-    }
-    this.SorterForm = new SorterForm(photographers, media);
+  async pagePhotographe(id) {
+    const photographer = await this.photographersApi.getPhotographerById(id);
+
+    this.renderPhotographerHeader(photographer.information);
+    this.renderPhotographerMedia(photographer);
+
+    this.SorterForm = new SorterForm(photographer.medias);
     this.SorterForm.render();
   }
 
@@ -39,7 +36,7 @@ class App {
           );
           let newLikeValue = likeNumberValue + 1;
           likeNumber.textContent = newLikeValue;
-          like.classList.add("clicked"); 
+          like.classList.add("clicked");
         }
       });
     });
@@ -55,7 +52,7 @@ class App {
           this.lightbox = new Lightbox(url);
           this.lightbox.setUrl(url);
           this.lightbox.render(url);
-          img.classList.add("clicked"); 
+          img.classList.add("clicked");
         }
       });
     });
@@ -73,11 +70,6 @@ class App {
     });
   }
 
-  getPhotographerIdFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("id");
-  }
-
   renderPhotographers(photographers) {
     photographers.forEach((photographer) => {
       const template = new PhotographerCard(photographer);
@@ -85,43 +77,38 @@ class App {
     });
   }
 
-  renderPhotographerHeader(photographers, id) {
-    const photographer = photographers.find((p) => p.id == id);
-    if (photographer) {
-      const header = new PhotographerCard(photographer);
-       //ici deplacer la logique d attache dans le cardmediaheader
-      this.photosHeader.appendChild(header.getHeader());
-    } else {
-      console.log("Aucun photographe trouvé avec l'ID spécifié.");
-    }
+  renderPhotographerHeader(photographerInformation) {
+    const header = new PhotographerCard(photographerInformation);
+    //ici deplacer la logique d attache dans le cardmediaheader
+    this.photosHeader.appendChild(header.getHeader());
   }
 
-  renderPhotographerMedia(photographers, media, id, url, namePerson) {
-    const photographerMedia = media.filter(
-      (item) => item.photographerId === parseInt(id)
-    );
+  renderPhotographerMedia(photographer) {
+    photographer.medias.forEach((mediaItem) => {
+      const template = new PhotographerCard(
+        photographer.information,
+        mediaItem
+      );
+      this.photosSection.appendChild(template.getUserCardMedia());
+    });
 
-    if (photographerMedia.length > 0) {
-      photographerMedia.forEach((mediaItem) => {
-        const photographer = photographers.find(
-          (p) => p.id == mediaItem.photographerId
-        );
-
-        if (photographer) {
-          namePerson = photographer.name;
-          const template = new PhotographerCard(photographer, mediaItem);
-          this.photosSection.appendChild(template.getUserCardMedia());
-        }
-      });
-      this.likeHeartEventListeners();
-      this.urlImages(url);
-      this.modalDisplay(namePerson);
-    } else {
-      console.log("Aucun média trouvé pour ce photographe.");
-    }
+    this.likeHeartEventListeners();
+    this.urlImages(photographer.information.url);
+    this.modalDisplay(photographer.information.name);
   }
   // sortie main
 }
-// sortie class
+
 const app = new App();
-app.main();
+
+let id = null;
+try {
+  const urlParams = new URLSearchParams(window.location.search);
+  id = urlParams.get("id");
+} catch (e) {}
+
+if (id !== null) {
+  app.pagePhotographe(id);
+} else {
+  app.pageListPhotographes();
+}

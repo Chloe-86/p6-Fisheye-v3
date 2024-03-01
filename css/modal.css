@@ -3,7 +3,7 @@
 
 .contact_modal {
   
-    z-index: 1000;
+    z-index: 10000;
     width: 100%;
     background-color: #fff;
     height: 100% ;
@@ -25,10 +25,7 @@
     cursor: pointer;
    
 }
-.contact_button:hover .contact_button:focus{
-    background-color: #DB8876;
-    color: #000;
-}
+
 .modal {
     max-width: 669px;
     height: 100%;
@@ -52,6 +49,7 @@
 .modal .header {
     justify-content: space-between;
     width: 100%;
+    
 }
 
 .modal .header img {
@@ -59,19 +57,48 @@
 }
 
 .modal .header h2 {
-    font-size: 64px;
+    /* font-size: 64px; */
+    font-size: clamp(32px,4vw,64px);
     font-weight: normal;
+    font-weight: 400;
     
 }
 .modal header h3{
     font-size: 64px;
     font-weight: 400;
     width: 100%;
+    font-size: clamp(32px,4vw,64px);
+}
+.modal label{
+    font-size: clamp(16px,2vw,32px);
+    color: #312E2E;
+    font-size: 36px;
+}
+.modal form{
+    margin-top: 50px;
 }
 
-.open{
-    display: block;
+form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: self-start;
+    margin-bottom: 26px;
 }
-.close{
-    display: none;
+form input {
+    width: 100%;
+    height: 68px;
+    border: none;
+    border-radius: 5px;
+}
+form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+   
+}
+
+input.text-area{
+    height: 170px;
 }
