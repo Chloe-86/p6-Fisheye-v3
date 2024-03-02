@@ -1,12 +1,13 @@
 class SorterForm {
-  constructor(photographers, media, photographerId) {
+  constructor(photographer, photographers, mediaItem) {
+    this.photographerInformation = photographer.information;
     this.photographers = photographers;
-    this.media = media;
-    this.photographerId = photographerId;
-    this.$wrapper = document.createElement("div");
-    this.$wrapper.classList.add("filter-container");
-    this.$filterFormWrapper = document.querySelector(".filter-wrapper");
-    this.$photosWrapper = document.querySelector(".photos_section");
+    this.media = mediaItem;
+    this.media = photographer.medias;
+    this.wrapper = document.createElement("div");
+    this.wrapper.classList.add("filter-container");
+    this.filterFormWrapper = document.querySelector(".filter-wrapper");
+    this.photosSection = document.querySelector(".photos_section"); // Ajout de cette ligne
     this.ProxyRatingSorter = new ProxyRatingSorter();
   }
 
@@ -29,15 +30,13 @@ class SorterForm {
 
       if (sortedMedias.length > 0) {
         sortedMedias.forEach((media) => {
-          const photographer = this.photographers.find(
-            (p) => p.id === media.photographerId
-          );
+          // Utilisation de this.photographerInformation au lieu de photographer
           const template = new PhotographerCard(
-            photographer,
+            this.photographerInformation,
             media,
-            photographer.name
+            this.photographerInformation.name // Utilisation de this.photographerInformation.name
           );
-          this.$photosWrapper.appendChild(template.getUserCardMedia());
+          this.photosSection.appendChild(template.getUserCardMedia(this.photographerInformation.name)); // Utilisation de this.$photosSection
         });
       }
     } else {
@@ -46,7 +45,7 @@ class SorterForm {
   }
 
   onChangeSorter() {
-    this.$wrapper.querySelectorAll("li").forEach((li) => {
+    this.wrapper.querySelectorAll("li").forEach((li) => {
       li.addEventListener("click", (e) => {
         const sorter = e.target.dataset.active;
         this.sorterMedias(sorter);
@@ -55,7 +54,7 @@ class SorterForm {
   }
 
   clearPhotographWrapper() {
-    this.$photosWrapper.innerHTML = "";
+    this.photosSection.innerHTML = ""; // Utilisation de this.$photosSection
   }
 
   render() {
@@ -77,9 +76,9 @@ class SorterForm {
       </div>
     `;
 
-    this.$wrapper.innerHTML = sorterForm;
+    this.wrapper.innerHTML = sorterForm;
     this.onChangeSorter();
-    this.$filterFormWrapper.appendChild(this.$wrapper);
+    this.filterFormWrapper.appendChild(this.wrapper);
     // Sélection de l'image
     const filterImg = document.querySelector(".filter img");
     // Sélection de la liste ul

@@ -7,7 +7,7 @@ class ProxyRatingSorter {
     }
 
     // Méthode asynchrone pour trier les medias avec mise en cache
-    async sorter(media, orderBy) {
+    async sorter(photographer, orderBy) {
         // Recherche d'un résultat déjà mis en cache pour cet orderBy
         const cachedResult = this.cache.find(elt => elt.key === orderBy)
         // Vérification si un résultat est trouvé dans le cache
@@ -19,7 +19,7 @@ class ProxyRatingSorter {
         }
 
         // Si aucune donnée n'est trouvée dans le cache, appelle l'API pour effectuer le tri
-        const data = await RatingSorterApi.sorter(media, orderBy)
+        const data = await RatingSorterApi.sorter(photographer, orderBy)
 
         // Ajoute les données triées au cache pour une utilisation ultérieure
         this.cache.push(data)

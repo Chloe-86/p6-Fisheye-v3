@@ -5,13 +5,13 @@ class Filter {
    * @param {array} media
    * @returns
    */
-  static async filterByChoice(choice, media) {
+  static async filterByChoice(choice,photographer) {
     await new Promise((resolve) => setTimeout(resolve, 200));
 
     if (!choice) {
-      return media;
+      return photographer;
     }
 
-    return media.filter((Media) => Media.date=== choice);
+    return photographer.filter((photo) => photo.date=== choice);
   }
 }

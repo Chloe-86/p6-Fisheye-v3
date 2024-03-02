@@ -48,18 +48,25 @@ class PhotographersApi extends Api {
       if (elt.id == id) {
         photograph.information = elt;
       }
+    //console.log(elt)//retourne 1 objet qui contient les 6 photographes
     });
+    //console.log(photographs)//retourne les 6 photographes dans une boucle
 
     medias.forEach((elt) => {
+    //console.log(medias)//retourne les 59 objets
       if (elt.photographerId == id) {
         photograph.medias.push(elt);
       }
+      //console.log(photograph.medias)//retourne les medias de l'id les 11 medias de chaque id sur lequel je suis
     });
 
+  // console.log(photograph.information)retourne les informations de 1 phototgraphe
     if (photograph.information.length == 0) {
       throw Error("Aucun photographe trouvé avec l'ID spécifié.");
     }
-
+    const photoInfo = photograph.information;
+    // console.log(photoInfo)
+   
     return photograph;
   }
 }

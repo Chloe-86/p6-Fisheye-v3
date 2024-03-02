@@ -1,11 +1,12 @@
 class FilterMediasAdapter {
-    constructor(media,date) {
-        this.media = media
-        this.date = date
+    constructor(photographer,date) {
+        this.photographer = photographer;
+        this.photographer = photographer.medias;
+        this.photographer.date = date;
     }
 
     async filterByDate() {
         console.log()
-        return await Filter.filterByDate(this.date, this.media)
+        return await Filter.filterByDate(this.photographer.date, this.photographer.media)
     }
 }
