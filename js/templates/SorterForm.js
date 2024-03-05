@@ -7,7 +7,7 @@ class SorterForm {
     this.wrapper = document.createElement("div");
     this.wrapper.classList.add("filter-container");
     this.filterFormWrapper = document.querySelector(".filter-wrapper");
-    this.photosSection = document.querySelector(".photos_section"); // Ajout de cette ligne
+    this.photosSection = document.querySelector(".photos_section");
     this.ProxyRatingSorter = new ProxyRatingSorter();
   }
 
@@ -30,11 +30,11 @@ class SorterForm {
 
       if (sortedMedias.length > 0) {
         sortedMedias.forEach((media) => {
-          // Utilisation de this.photographerInformation au lieu de photographer
+
           const template = new PhotographerCard(
             this.photographerInformation,
             media,
-            this.photographerInformation.name // Utilisation de this.photographerInformation.name
+            this.photographerInformation.name 
           );
           this.photosSection.appendChild(template.getUserCardMedia(this.photographerInformation.name)); // Utilisation de this.$photosSection
         });
@@ -54,7 +54,7 @@ class SorterForm {
   }
 
   clearPhotographWrapper() {
-    this.photosSection.innerHTML = ""; // Utilisation de this.$photosSection
+    this.photosSection.innerHTML = ""; 
   }
 
   render() {

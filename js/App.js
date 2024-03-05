@@ -21,7 +21,6 @@ class App {
 
     this.SorterForm = new SorterForm(photographer,photographer.medias, photographer.information);
     this.SorterForm.render(photographer,photographer.medias, photographer.information);
-    console.log(photographer);
   }
 
 

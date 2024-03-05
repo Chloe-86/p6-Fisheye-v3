@@ -244,3 +244,17 @@
 .clicklike {
   cursor: pointer;
 }
+.card-like{
+  max-width: 376px;
+  max-height: 89px;
+  color: black;
+  border-radius: 5px;
+  background: #DB8876;
+  display: flex;
+  justify-content: space-between;
+  padding: 31px 21px;
+}
+.card-like img{
+  width: 21px;
+  height: auto;
+}

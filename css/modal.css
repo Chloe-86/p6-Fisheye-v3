@@ -25,6 +25,10 @@
     cursor: pointer;
    
 }
+.contact_button:hover, .contact_button:focus{
+    color: #000000;
+    background: #DB8876;
+}
 
 .modal {
     max-width: 669px;

@@ -1,15 +1,61 @@
 class PhotographerCard {
+  static instance = null; // Propriété statique pour stocker l'instance unique de la lightbox
   constructor(photographer, mediaItem) {
     this.photographerInformation = photographer;
     this.media = mediaItem;
     this.photosSection = document.querySelector(".photos_section");
     this.photosHeader = document.querySelector(".photograph-head");
+    this.main= document.querySelector('#main');
+  }
+
+  static getInstance() {
+    if (!Lightbox.instance) {
+      Lightbox.instance = new Lightbox();
+    }
+    return Lightbox.instance;
+  }
+  fetchLikeNumber() {
+
+    // Sélectionner tous les éléments <p> avec la classe "like"
+    const likeElements = document.querySelectorAll('.likes p');
+    console.log(likeElements)
+    // Créer un tableau pour stocker les valeurs des likes
+    const likeValues = [];
+
+    // Parcourir tous les éléments <p> sélectionnés
+    likeElements.forEach((element) => {
+        // Obtenir le texte contenu dans chaque élément <p> et l' ajouter au tableau
+        likeValues.push(parseInt(element.textContent.trim()));
+        console.log(element)
+    });
+    console.log(likeValues);
+    // Maintenant, likeValues contient toutes les valeurs de likes
+    
+
+
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("likeWrapper");
+
+    const likeNumber = `
+    <article class="card-like">
+          <div class="likes">
+            <img src="assets/images/svg/blacklike.svg" class="clicklike">
+            <p>${likeValues}</p>
+          </div>
+          <div>
+          <p>${this.photographerInformation.price} / jour</p>
+        </div>
+    </article>
+        `;
+    wrapper.innerHTML = likeNumber;
+    return wrapper;
   }
 
   renderPhotographerHeader(photographerInformation) {
     const header = new PhotographerCard(photographerInformation);
-    //ici deplacer la logique d attache dans le cardmediaheader
+  
     this.photosHeader.appendChild(header.getHeader());
+    this.main.appendChild(header.fetchLikeNumber());
   }
 
   renderPhotographerMedia(photographer) {
@@ -19,16 +65,27 @@ class PhotographerCard {
         mediaItem
       );
       this.photosSection.appendChild(template.getUserCardMedia());
-      this.likeHeartEventListeners();
-      this.urlImages(photographer.information.url);
+      this.likeHeartEventListeners(mediaItem, photographer.information);
+      this.urlImages(photographer.information.url, photographer, mediaItem);
+      this.lightbox = new Lightbox(photographer, mediaItem);
       this.modalDisplay(photographer.information.name);
+      
     });
-
-
+    
+  
   }
+
+  // lightboxeKill() {
+  //   let lightboxes = document.querySelectorAll(".lightbox");
+  //   for (let i = 1; i < lightboxes.length; i++) {
+  //     lightboxes[i].remove();
+  //   }
+  // }
+
   likeHeartEventListeners() {
     let likes = document.querySelectorAll(".clicklike");
 
+    
     likes.forEach((like) => {
       like.addEventListener("click", (e) => {
         if (!like.classList.contains("clicked")) {
@@ -44,22 +101,82 @@ class PhotographerCard {
       });
     });
   }
-  urlImages(url) {
+
+
+  // urlImages(url, photographer, mediaItem, namePerson) {
+  //   let images = document.querySelectorAll(".containerImage img");
+  //   console.log(images);
+  //   let mediaList = [];
+  //   mediaList.push(mediaItem);
+  //   console.log(mediaList)
+  //   namePerson = this.photographerInformation.information.name;
+
+  //   images.forEach((img) => {
+  //     img.addEventListener("click", (e) => {
+  //       e.preventDefault();
+  //       this.lightboxeKill();
+  //       url = e.target.src;
+  //       namePerson = namePerson;
+  //       this.lightbox = new Lightbox(
+  //         url,
+  //         photographer,
+  //         mediaItem,
+  //         namePerson,
+  //         mediaList
+  //       );
+  //       this.lightbox.setUrl(url);
+  //       this.lightbox.setList(mediaList);
+  //       this.lightbox.render(url, mediaItem, photographer, namePerson, mediaList);
+  //       img.classList.add("clicked-img");
+  //     });
+  //   });
+  // }
+
+  urlImages(url, photographer, mediaItem, namePerson) {
     let images = document.querySelectorAll(".containerImage img");
+    namePerson = this.photographerInformation.information.name;
+    let mediaList = [mediaItem];
+    let imageArray = [];
+    let titleArray = [];
+    let newMedia;
+    for (let i = 0; i < mediaList.length; i++) {
+      imageArray.push(mediaList[i].image);
+      titleArray.push(mediaList[i].title);
+      newMedia += imageArray + titleArray;
+    }
 
     images.forEach((img) => {
       img.addEventListener("click", (e) => {
         e.preventDefault();
-        if (!img.classList.contains("clicked")) {
-          url = e.target.src;
-          this.lightbox = new Lightbox(url);
-          this.lightbox.setUrl(url);
-          this.lightbox.render(url);
-          img.classList.add("clicked");
+        // this.lightboxeKill();
+        url = e.target.src;
+        namePerson = this.photographerInformation.information.name;
+
+        // Créez une nouvelle liste de médias à chaque clic sur une image
+
+        if (!PhotographerCard.lightboxInstance) {
+          // S'il n'y a pas encore d'instance de la lightbox, créez-en une
+          PhotographerCard.lightboxInstance = new Lightbox(
+            url,
+            photographer,
+            mediaItem,
+            namePerson,
+            mediaList
+          );
+        } else {
+          // Si une instance existe déjà, mettez à jour ses informations
+          PhotographerCard.lightboxInstance.setUrl(url);
+          PhotographerCard.lightboxInstance.setList(mediaList);
         }
+
+        // Affichez la lightbox
+        PhotographerCard.lightboxInstance.render();
+
+        img.classList.add("clicked-img");
       });
     });
   }
+
   modalDisplay(namePerson) {
     const btn = document.querySelector(".contact_button");
     btn.addEventListener("click", (e) => {
@@ -90,13 +207,6 @@ class PhotographerCard {
               `;
 
     $wrapper.innerHTML = headerCard;
-
-    // Simulation de :focus avec focus et blur: (suspicion)ne fonctionne pas car pas attache encore$wrapper (regarder la lightbox: changer app)
-    // this.$wrapper.querySelector('contact_button').addEventListener("focus", () => {
-    //   // Ajouter des styles pour simuler :focus
-    //   button.style.background = "#0056b3";
-    // });
-    //doit attacher ici appendchild le wrapper
     return $wrapper;
   }
 
@@ -162,4 +272,6 @@ class PhotographerCard {
     wrapper.innerHTML = photographerCardMedia;
     return wrapper;
   }
+ 
+
 }
