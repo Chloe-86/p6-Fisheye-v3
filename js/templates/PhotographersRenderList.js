@@ -11,25 +11,24 @@ class PhotographersRenderList {
       const template = this.getUserCardDOM(photographer);
       this.$photographersWrapper.appendChild(template);
     });
-   
   }
 
-  getUserCardDOM(photographer) {
+  getUserCardDOM(photographerInformation) {
     const $wrapper = document.createElement("div");
 
     const photographerCard = `
           <article>
-              <a href="photographer.html?id=${photographer.id}">
+              <a href="photographer.html?id=${photographerInformation.id}">
                   <img
-                      alt="${photographer.name}"
-                      src="/assets/photographers/${photographer.portrait}"
+                      alt="${photographerInformation.name}"
+                      src="/assets/photographers/${photographerInformation.portrait}"
                   />
               </a>
-              <h2>${photographer.name}</h2>
-              <h3> ${photographer.city} , ${photographer.country} </h3>
+              <h2>${photographerInformation.name}</h2>
+              <h3> ${photographerInformation.city} , ${photographerInformation.country} </h3>
               <p>
-              <span>${photographer.tagline}</span>
-              <span>${photographer.price} €/jour</span> 
+              <span>${photographerInformation.tagline}</span>
+              <span>${photographerInformation.price} €/jour</span> 
               </p>
           </article>
           `;

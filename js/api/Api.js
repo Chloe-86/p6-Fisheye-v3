@@ -24,7 +24,7 @@ class PhotographersApi extends Api {
     super(url);
   }
 
-  async getPhotographers() {
+  async getPhotographersList() {
     const photographersData = await this.get();
     this.photographersData = photographersData.photographers;
     return await this.photographersData;
@@ -37,16 +37,16 @@ class PhotographersApi extends Api {
   }
 
   async getPhotographerById(id) {
-    const photographs = await this.getPhotographers();
+    const photographersList = await this.getPhotographersList();
     const medias = await this.getMedias();
-    const photograph = {
+    const photographer = {
       information: {},
       medias: [],
     };
 
-    photographs.forEach((elt) => {
+    photographersList.forEach((elt) => {
       if (elt.id == id) {
-        photograph.information = elt;
+        photographer.information = elt;
       }
     //console.log(elt)//retourne 1 objet qui contient les 6 photographes
     });
@@ -55,18 +55,18 @@ class PhotographersApi extends Api {
     medias.forEach((elt) => {
     //console.log(medias)//retourne les 59 objets
       if (elt.photographerId == id) {
-        photograph.medias.push(elt);
+        photographer.medias.push(elt);
       }
       //console.log(photograph.medias)//retourne les medias de l'id les 11 medias de chaque id sur lequel je suis
     });
 
   // console.log(photograph.information)retourne les informations de 1 phototgraphe
-    if (photograph.information.length == 0) {
+    if (photographer.information.length == 0) {
       throw Error("Aucun photographe trouvé avec l'ID spécifié.");
     }
-    const photoInfo = photograph.information;
+    const photoInfo = photographer.information;
     // console.log(photoInfo)
    
-    return photograph;
+    return photographer;
   }
 }

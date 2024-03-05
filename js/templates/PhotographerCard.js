@@ -1,4 +1,4 @@
-class PhotographerCard {
+class PhotographerCardMedias {
   static instance = null; // Propriété statique pour stocker l'instance unique de la lightbox
   constructor(photographer, mediaItem) {
     this.photographerInformation = photographer;
@@ -8,16 +8,10 @@ class PhotographerCard {
     this.main = document.querySelector("#main");
   }
 
-  static getInstance() {
-    if (!Lightbox.instance) {
-      Lightbox.instance = new Lightbox();
-    }
-    return Lightbox.instance;
-  }
   fetchLikeNumber() {
     // Sélectionner tous les éléments <p> avec la classe "like"
     const likeElements = document.querySelectorAll(".likes p");
-  
+
     // Créer un tableau pour stocker les valeurs des likes
     const likeValues = [];
 
@@ -28,7 +22,7 @@ class PhotographerCard {
     });
     const likeNumberTotal = likeValues.reduce((acc, curr) => acc + curr, 0);
     // Maintenant, likeValues contient toutes les valeurs de likes
-    console.log(likeValues);
+
     const wrapper = document.createElement("div");
     wrapper.classList.add("likeWrapper");
 
@@ -47,15 +41,14 @@ class PhotographerCard {
     return wrapper;
   }
 
-  renderPhotographerHeader(photographerInformation, mediaItem) {
-    const header = new PhotographerCard(photographerInformation);
+  renderPhotographerHeader(photographerInformation) {
+    const header = new PhotographerCardMedias(photographerInformation);
     this.photosHeader.appendChild(header.getHeader());
-    
   }
 
   renderPhotographerMedia(photographer) {
     photographer.medias.forEach((mediaItem) => {
-      const template = new PhotographerCard(
+      const template = new PhotographerCardMedias(
         photographer.information,
         mediaItem
       );
@@ -64,12 +57,10 @@ class PhotographerCard {
       this.urlImages(photographer.information.url, photographer, mediaItem);
       this.lightbox = new Lightbox(photographer, mediaItem);
       this.modalDisplay(photographer.information.name);
-     
     });
-    
   }
-  renderLikeMedia(photographer){
-    const mediaLike = new PhotographerCard(photographer.information);
+  renderLikeMedia(photographer) {
+    const mediaLike = new PhotographerCardMedias(photographer.information);
     this.main.appendChild(mediaLike.fetchLikeNumber());
   }
   // lightboxeKill() {
@@ -98,46 +89,80 @@ class PhotographerCard {
     });
   }
 
+  // urlImages(url, photographer, mediaItem, namePerson) {
+  //   let images = document.querySelectorAll(".containerImage img");
+  //   namePerson = this.photographerInformation.information.name;
+  //   let mediaList = [mediaItem];
+  //   let imageArray = [];
+  //   let titleArray = [];
+  //   let newMedia;
+  //   for (let i = 0; i < mediaList.length; i++) {
+  //     imageArray.push(mediaList[i].image);
+  //     titleArray.push(mediaList[i].title);
+  //     newMedia += imageArray + titleArray;
+  //   }
+
+  //   images.forEach((img) => {
+  //     img.addEventListener("click", (e) => {
+  //       e.preventDefault();
+  //       // this.lightboxeKill();
+  //       url = e.target.src;
+  //       namePerson = this.photographerInformation.information.name;
+
+  //       // Créez une nouvelle liste de médias à chaque clic sur une image
+
+  //       if (!PhotographerCard.lightboxInstance) {
+  //         // S'il n'y a pas encore d'instance de la lightbox, créez-en une
+  //         PhotographerCard.lightboxInstance = new Lightbox(
+  //           url,
+  //           photographer,
+  //           mediaItem,
+  //           namePerson,
+  //           mediaList
+  //         );
+  //       } else {
+  //         // Si une instance existe déjà, mettez à jour ses informations
+  //         PhotographerCard.lightboxInstance.setUrl(url);
+  //         PhotographerCard.lightboxInstance.setList(mediaList);
+  //       }
+
+  //       // Affichez la lightbox
+  //       PhotographerCard.lightboxInstance.render();
+
+  //       img.classList.add("clicked-img");
+  //     });
+  //   });
+  // }
   urlImages(url, photographer, mediaItem, namePerson) {
     let images = document.querySelectorAll(".containerImage img");
+
+    let mediaList = [];
+    mediaList.push(mediaItem);
+
     namePerson = this.photographerInformation.information.name;
-    let mediaList = [mediaItem];
-    let imageArray = [];
-    let titleArray = [];
-    let newMedia;
-    for (let i = 0; i < mediaList.length; i++) {
-      imageArray.push(mediaList[i].image);
-      titleArray.push(mediaList[i].title);
-      newMedia += imageArray + titleArray;
-    }
 
     images.forEach((img) => {
       img.addEventListener("click", (e) => {
         e.preventDefault();
         // this.lightboxeKill();
         url = e.target.src;
-        namePerson = this.photographerInformation.information.name;
-
-        // Créez une nouvelle liste de médias à chaque clic sur une image
-
-        if (!PhotographerCard.lightboxInstance) {
-          // S'il n'y a pas encore d'instance de la lightbox, créez-en une
-          PhotographerCard.lightboxInstance = new Lightbox(
-            url,
-            photographer,
-            mediaItem,
-            namePerson,
-            mediaList
-          );
-        } else {
-          // Si une instance existe déjà, mettez à jour ses informations
-          PhotographerCard.lightboxInstance.setUrl(url);
-          PhotographerCard.lightboxInstance.setList(mediaList);
-        }
-
-        // Affichez la lightbox
-        PhotographerCard.lightboxInstance.render();
-
+        namePerson = namePerson;
+        this.lightbox = new Lightbox(
+          url,
+          photographer,
+          mediaItem,
+          namePerson,
+          mediaList
+        );
+        this.lightbox.setUrl(url);
+        this.lightbox.setList(mediaList);
+        this.lightbox.render(
+          url,
+          mediaItem,
+          photographer,
+          namePerson,
+          mediaList
+        );
         img.classList.add("clicked-img");
       });
     });

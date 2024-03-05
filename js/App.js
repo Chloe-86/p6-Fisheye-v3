@@ -4,16 +4,16 @@ class App {
   }
 
   async pageListPhotographes() {
-    const photographers = await this.photographersApi.getPhotographers();
+    const photographers = await this.photographersApi.getPhotographersList();
     this.photographersRenderList = new PhotographersRenderList(photographers);
-    this.photographersRenderList.render();
+    this.photographersRenderList.render(photographers);
   }
 
   async pagePhotographe(id) {
     const photographer = await this.photographersApi.getPhotographerById(id);
 
     //instancier page du photographe
-    this.photo = new PhotographerCard(photographer);
+    this.photo = new PhotographerCardMedias(photographer);
     this.photo.renderPhotographerHeader(photographer.information);
     this.photo.renderPhotographerMedia(photographer);
     this.photo.renderLikeMedia(photographer);
