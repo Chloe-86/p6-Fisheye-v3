@@ -1,30 +1,34 @@
 class App {
   constructor() {
-    this.photographersApi = new PhotographersApi("/data/photographers.json"); 
+    this.photographersApi = new PhotographersApi("/data/photographers.json");
   }
 
   async pageListPhotographes() {
     const photographers = await this.photographersApi.getPhotographers();
-    this.photographers = new Photographers(photographers);
-    this.photographers.renderPhotographers(photographers);
-
+    this.photographersRenderList = new PhotographersRenderList(photographers);
+    this.photographersRenderList.render();
   }
 
   async pagePhotographe(id) {
     const photographer = await this.photographersApi.getPhotographerById(id);
 
-    
     //instancier page du photographe
     this.photo = new PhotographerCard(photographer);
     this.photo.renderPhotographerHeader(photographer.information);
     this.photo.renderPhotographerMedia(photographer);
     this.photo.renderLikeMedia(photographer);
 
-    this.SorterForm = new SorterForm(photographer,photographer.medias, photographer.information);
-    this.SorterForm.render(photographer,photographer.medias, photographer.information);
+    this.SorterForm = new SorterForm(
+      photographer,
+      photographer.medias,
+      photographer.information
+    );
+    this.SorterForm.render(
+      photographer,
+      photographer.medias,
+      photographer.information
+    );
   }
-
-
 }
 
 const app = new App();
@@ -40,5 +44,3 @@ if (id !== null) {
 } else {
   app.pageListPhotographes();
 }
-
-

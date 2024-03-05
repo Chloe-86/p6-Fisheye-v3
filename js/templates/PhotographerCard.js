@@ -39,7 +39,7 @@ class PhotographerCard {
               <p>${likeNumberTotal}</p>
             </div>
             <div>
-            <p>${this.photographerInformation.price} / jour</p>
+            <p>${this.photographerInformation.price} € / jour</p>
           </div>
       </article>
           `;
@@ -70,7 +70,7 @@ class PhotographerCard {
   }
   renderLikeMedia(photographer){
     const mediaLike = new PhotographerCard(photographer.information);
-      this.main.appendChild(mediaLike.fetchLikeNumber());
+    this.main.appendChild(mediaLike.fetchLikeNumber());
   }
   // lightboxeKill() {
   //   let lightboxes = document.querySelectorAll(".lightbox");
