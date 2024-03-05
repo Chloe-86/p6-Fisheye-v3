@@ -5,7 +5,7 @@ class PhotographerCard {
     this.media = mediaItem;
     this.photosSection = document.querySelector(".photos_section");
     this.photosHeader = document.querySelector(".photograph-head");
-    this.main= document.querySelector('#main');
+    this.main = document.querySelector("#main");
   }
 
   static getInstance() {
@@ -15,47 +15,42 @@ class PhotographerCard {
     return Lightbox.instance;
   }
   fetchLikeNumber() {
-
     // Sélectionner tous les éléments <p> avec la classe "like"
-    const likeElements = document.querySelectorAll('.likes p');
-    console.log(likeElements)
+    const likeElements = document.querySelectorAll(".likes p");
+  
     // Créer un tableau pour stocker les valeurs des likes
     const likeValues = [];
 
     // Parcourir tous les éléments <p> sélectionnés
     likeElements.forEach((element) => {
-        // Obtenir le texte contenu dans chaque élément <p> et l' ajouter au tableau
-        likeValues.push(parseInt(element.textContent.trim()));
-        console.log(element)
+      // Obtenir le texte contenu dans chaque élément <p> et l' ajouter au tableau
+      likeValues.push(parseInt(element.textContent.trim()));
     });
-    console.log(likeValues);
+    const likeNumberTotal = likeValues.reduce((acc, curr) => acc + curr, 0);
     // Maintenant, likeValues contient toutes les valeurs de likes
-    
-
-
+    console.log(likeValues);
     const wrapper = document.createElement("div");
     wrapper.classList.add("likeWrapper");
 
     const likeNumber = `
-    <article class="card-like">
-          <div class="likes">
-            <img src="assets/images/svg/blacklike.svg" class="clicklike">
-            <p>${likeValues}</p>
+      <article class="card-like">
+            <div class="likes">
+              <img src="assets/images/svg/blacklike.svg" class="clicklike">
+              <p>${likeNumberTotal}</p>
+            </div>
+            <div>
+            <p>${this.photographerInformation.price} / jour</p>
           </div>
-          <div>
-          <p>${this.photographerInformation.price} / jour</p>
-        </div>
-    </article>
-        `;
+      </article>
+          `;
     wrapper.innerHTML = likeNumber;
     return wrapper;
   }
 
-  renderPhotographerHeader(photographerInformation) {
+  renderPhotographerHeader(photographerInformation, mediaItem) {
     const header = new PhotographerCard(photographerInformation);
-  
     this.photosHeader.appendChild(header.getHeader());
-    this.main.appendChild(header.fetchLikeNumber());
+    
   }
 
   renderPhotographerMedia(photographer) {
@@ -69,12 +64,14 @@ class PhotographerCard {
       this.urlImages(photographer.information.url, photographer, mediaItem);
       this.lightbox = new Lightbox(photographer, mediaItem);
       this.modalDisplay(photographer.information.name);
-      
+     
     });
     
-  
   }
-
+  renderLikeMedia(photographer){
+    const mediaLike = new PhotographerCard(photographer.information);
+      this.main.appendChild(mediaLike.fetchLikeNumber());
+  }
   // lightboxeKill() {
   //   let lightboxes = document.querySelectorAll(".lightbox");
   //   for (let i = 1; i < lightboxes.length; i++) {
@@ -85,7 +82,6 @@ class PhotographerCard {
   likeHeartEventListeners() {
     let likes = document.querySelectorAll(".clicklike");
 
-    
     likes.forEach((like) => {
       like.addEventListener("click", (e) => {
         if (!like.classList.contains("clicked")) {
@@ -101,36 +97,6 @@ class PhotographerCard {
       });
     });
   }
-
-
-  // urlImages(url, photographer, mediaItem, namePerson) {
-  //   let images = document.querySelectorAll(".containerImage img");
-  //   console.log(images);
-  //   let mediaList = [];
-  //   mediaList.push(mediaItem);
-  //   console.log(mediaList)
-  //   namePerson = this.photographerInformation.information.name;
-
-  //   images.forEach((img) => {
-  //     img.addEventListener("click", (e) => {
-  //       e.preventDefault();
-  //       this.lightboxeKill();
-  //       url = e.target.src;
-  //       namePerson = namePerson;
-  //       this.lightbox = new Lightbox(
-  //         url,
-  //         photographer,
-  //         mediaItem,
-  //         namePerson,
-  //         mediaList
-  //       );
-  //       this.lightbox.setUrl(url);
-  //       this.lightbox.setList(mediaList);
-  //       this.lightbox.render(url, mediaItem, photographer, namePerson, mediaList);
-  //       img.classList.add("clicked-img");
-  //     });
-  //   });
-  // }
 
   urlImages(url, photographer, mediaItem, namePerson) {
     let images = document.querySelectorAll(".containerImage img");
@@ -272,6 +238,4 @@ class PhotographerCard {
     wrapper.innerHTML = photographerCardMedia;
     return wrapper;
   }
- 
-
 }

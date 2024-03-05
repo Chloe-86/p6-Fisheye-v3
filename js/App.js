@@ -18,6 +18,7 @@ class App {
     this.photo = new PhotographerCard(photographer);
     this.photo.renderPhotographerHeader(photographer.information);
     this.photo.renderPhotographerMedia(photographer);
+    this.photo.renderLikeMedia(photographer);
 
     this.SorterForm = new SorterForm(photographer,photographer.medias, photographer.information);
     this.SorterForm.render(photographer,photographer.medias, photographer.information);
