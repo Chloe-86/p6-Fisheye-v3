@@ -17,25 +17,25 @@ class Lightbox {
   }
 
   setList(mediaList) {
-    this.list = 
-    mediaList;
+    this.list = mediaList;
   }
 
   render() {
     // Définit le chemin de l'image
-    
+
     console.log(this.photographerInformation.information.name);
 
     // Définit le HTML de la lightbox
     const lightboxHTML = `
       <div class="lightbox__container1">
-        <button class="lightbox__close"></button>
-        <button class="lightbox__next"></button>
-        <button class="lightbox__prev"></button>
         <div class="lightbox__container2">
+          <button class="lightbox__close"></button>
+          <button class="lightbox__next"></button>
+          <button class="lightbox__prev"></button>
           <img src="${this.url}">
           <p>${this.media.title}</p>
         </div>
+        
       </div>
     `;
 
@@ -78,7 +78,7 @@ class Lightbox {
 
   // Méthode pour passer à l'image suivante
   nextImage() {
-    console.log(this.list)
+    console.log(this.list);
     this.index = (this.index + 1) % this.list.length;
     const nextMedia = this.list[this.index];
     const imageUrl = `../../assets/images/Sample_photo/${this.photographerInformation.information.name}/${nextMedia.image}`;
