@@ -1,23 +1,21 @@
 class ContactForm {
-  constructor(photographer, media, url, namePerson) {
+  constructor(photographer, media, url) {
     this.photographer = photographer;
     this.media = media;
     this.url = url;
-    this.namePerson = namePerson;
     // Création d'un élément div pour le wrapper du formulaire de tri
-    this.$wrapper = document.createElement("div");
+    this.wrapper = document.createElement("div");
     // Sélection de l'élément avec la classe "filter-wrapper" pour le wrapper du formulaire de tri
-    this.$wrapper.classList.add("contact_modal");
-    this.$filterFormWrapper = document.querySelector("body");
-  }
- setName(namePerson){
-  return this.namePerson = namePerson;
- }
-  closeModal() {
-    this.$filterFormWrapper.removeChild(this.$wrapper);
+    this.wrapper.classList.add("contact_modal");
+    this.filterFormWrapper = document.querySelector("body");
   }
 
-  render() {
+  closeModal() {
+    // this.$filterFormWrapper.removeChild(this.$wrapper);
+    this.wrapper.style.display = "none";
+  }
+
+  render(photographer) {
     // Définit le HTML du formulaire de tri
     const modal = `
             <div class="modal__container">
@@ -28,7 +26,7 @@ class ContactForm {
                   <h2>Contactez-moi</h2>
                   <img class="lightbox_close" src="assets/icons/close.svg"/>
                 </div>
-                <h3>${this.namePerson}</h3>
+                <h3>${photographer}</h3>
               </header>
               <form name="reserve" action="index.html" method="get" id="signup">
                 <div class="formData" id="nickName">
@@ -61,13 +59,13 @@ class ContactForm {
         `;
 
     // Injecte le HTML du formulaire dans le wrapper du formulaire
-    this.$wrapper.innerHTML = modal;
-
+    this.wrapper.innerHTML = modal;
+    this.wrapper.style.display = "block";
     // Ajoute le formulaire rendu au wrapper du formulaire dans le document
-    this.$filterFormWrapper.appendChild(this.$wrapper);
+    this.filterFormWrapper.appendChild(this.wrapper);
 
     // Ajout du gestionnaire d'événements au bouton de fermeture
-    const closeButton = this.$wrapper.querySelector(".lightbox_close");
+    const closeButton = this.wrapper.querySelector(".lightbox_close");
     closeButton.addEventListener("click", (event) => {
       event.preventDefault();
       this.closeModal(); // Appel de la méthode closeModal() lorsque le bouton de fermeture est cliqué

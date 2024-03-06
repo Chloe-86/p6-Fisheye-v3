@@ -1,20 +1,21 @@
 class PhotographersRenderList {
   constructor(photographersList) {
     this.photographersList = photographersList;
-    this.$photographersWrapper = document.querySelector(
-      ".photographer_section"
-    );
+    this.body = document.querySelector('body');
+    this.photographersWrapper = document.createElement("div");
+    this.photographersWrapper.classList.add('photographer_section');
+    this.body.appendChild(this.photographersWrapper);
   }
 
   render() {
     this.photographersList.forEach((photographer) => {
       const template = this.getUserCardDOM(photographer);
-      this.$photographersWrapper.appendChild(template);
+      this.photographersWrapper.appendChild(template);
     });
   }
 
   getUserCardDOM(photographerInformation) {
-    const $wrapper = document.createElement("div");
+    const wrapper = document.createElement("div");
 
     const photographerCard = `
           <article>
@@ -33,7 +34,7 @@ class PhotographersRenderList {
           </article>
           `;
 
-    $wrapper.innerHTML = photographerCard;
-    return $wrapper;
+    wrapper.innerHTML = photographerCard;
+    return wrapper;
   }
 }

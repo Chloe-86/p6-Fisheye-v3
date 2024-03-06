@@ -1,33 +1,57 @@
 class App {
   constructor() {
     this.photographersApi = new PhotographersApi("/data/photographers.json");
+    this.headerBanner = new HeaderBanner();
   }
 
   async pageListPhotographes() {
+
+     this.headerBanner.renderPhotographersHeader();
+
     const photographers = await this.photographersApi.getPhotographersList();
     this.photographersRenderList = new PhotographersRenderList(photographers);
     this.photographersRenderList.render(photographers);
+    
   }
 
   async pagePhotographe(id) {
     const photographer = await this.photographersApi.getPhotographerById(id);
 
+     this.headerBanner.renderPhototographerHeader();
+
+    // console.log(photographer)
+    // console.log(photographer.information)
+    // console.log(photographer.medias);
+   
+
     //instancier page du photographe
     this.photo = new PhotographerCardMedias(photographer);
-    this.photo.renderPhotographerHeader(photographer.information);
-    this.photo.renderPhotographerMedia(photographer);
-    this.photo.renderLikeMedia(photographer);
 
+    //instancier le header
+    this.header = new HeaderCardPresentation(photographer);
+    this.header.renderPhotographerHeader(photographer);
+    
+
+     // appele les medias
+    this.photo.renderPhotographerMedia(photographer);
+
+    
+    //appelle le filtre
     this.SorterForm = new SorterForm(
       photographer,
       photographer.medias,
-      photographer.information
+      photographer.information,
+      this.photo
     );
     this.SorterForm.render(
       photographer,
       photographer.medias,
-      photographer.information
+      photographer.information,
+      
     );
+   
+    const fetchLike = new FetchLikeNumber(photographer);
+    fetchLike.render();
   }
 }
 

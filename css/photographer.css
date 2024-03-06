@@ -112,65 +112,8 @@
 .photograph-header h3 {
   color: #901c1c;
 }
-/* filtres
-.filter-wrapper{
-  position: relative;
-}
- .filter {
-  display: flex;
-  gap: 30px;
-  position: absolute;
-  top: -58px;
-} 
 
-.filter label, .filter-select {
-  font-family: "DM Sans";
-  font-size: 18px;
-  font-weight: 700;
-}
-.filter label{
-  display: flex;
-  gap: 30px;
-  position: absolute;
-  top: -58px;
-}
 
-#filter-select option{
-  font-family: "DM Sans";
-  font-size: 18px;
-  font-weight: 700;
-  padding-left: 10px;
-  padding-bottom: 14px;
-  padding-top: 4px;
-  cursor: pointer;
-}
-
-#filter-select{
-  width: 170px;
-  background-color: #901c1c;
-  color: #fff;
-  padding: 13px 10px 10px;
-  position: relative;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  overflow: hidden;
-  height: 40px;
-}
-#date,#title{
-  padding-top: 14px;
-}
-
-.filter ul li:nth-child(1),.filter ul li:nth-child(2){
-  border-bottom: 1px solid white;
-
-}
-.filter img{
-  position: absolute;
-  top: 13px;
-  right: 0;
-  z-index: 3;
-  cursor: pointer;
-} */
 /* filtres */
 .filter-wrapper {
   position: relative;
@@ -266,4 +209,12 @@
 .card-like img{
   width: 21px;
   height: auto;
+}
+
+/* provisoire filtres */
+
+.filter-wrapper{
+  position: absolute;
+  top: 450px;
+  left: 50px;
 }

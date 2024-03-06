@@ -1,14 +1,15 @@
 class SorterForm {
-  constructor(photographer, photographers, mediaItem) {
+  constructor(photographer, photographers, mediaItem, photographerCardMedias ) {
     this.photographerInformation = photographer.information;
     this.photographers = photographers;
     this.media = mediaItem;
     this.media = photographer.medias;
     this.wrapper = document.createElement("div");
     this.wrapper.classList.add("filter-container");
-    this.filterFormWrapper = document.querySelector(".filter-wrapper");
-    this.photosSection = document.querySelector(".photos_section");
+    this.body = document.querySelector("body");
     this.ProxyRatingSorter = new ProxyRatingSorter();
+    this.photographerCardMedias = photographerCardMedias;
+    this.photosSection = photographerCardMedias.photosSection;
   }
 
   async sorterMedias(sorter) {
@@ -30,17 +31,37 @@ class SorterForm {
 
       if (sortedMedias.length > 0) {
         sortedMedias.forEach((media) => {
-
-          const template = new PhotographerCard(
+          const template = new PhotographerCardMedias(
             this.photographerInformation,
             media,
-            this.photographerInformation.name 
+            this.photographerInformation.name
           );
-          this.photosSection.appendChild(template.getUserCardMedia(this.photographerInformation.name)); // Utilisation de this.$photosSection
+          this.photosSection.appendChild(
+            template.getUserCardMedia(this.photographerInformation.name)
+          ); 
+          this.PhotographerCardMedias.likeHeartEventListeners(mediaItem, photographer.information);
+          this.PhotographerCardMedias.urlImages(photographer.information.url, photographer, mediaItem);
+          this.PhotographerCardMedias.lightbox = new Lightbox(photographer, mediaItem);
         });
       }
     } else {
       // Afficher les médias dans l'ordre original
+      
+      // renderPhotographerMedia(photographer) {
+      //   this.createPhotosSection();
+        
+      //   photographer.medias.forEach((mediaItem) => {
+      //     const template = new PhotographerCardMedias(
+      //       photographer.information,
+      //       mediaItem
+      //     );
+    
+      //     this.photosSection.appendChild(photographerCardMedias.getUserCardMedia());
+      //     this.likeHeartEventListeners(mediaItem, photographer.information);
+      //     this.urlImages(photographer.information.url, photographer, mediaItem);
+      //     this.lightbox = new Lightbox(photographer, mediaItem);
+      //   });
+      // }
     }
   }
 
@@ -54,7 +75,8 @@ class SorterForm {
   }
 
   clearPhotographWrapper() {
-    this.photosSection.innerHTML = ""; 
+    this.photosSection.innerHTML = "";
+
   }
 
   render() {
@@ -78,7 +100,7 @@ class SorterForm {
 
     this.wrapper.innerHTML = sorterForm;
     this.onChangeSorter();
-    this.filterFormWrapper.appendChild(this.wrapper);
+    this.body.appendChild(this.wrapper);
     // Sélection de l'image
     const filterImg = document.querySelector(".filter img");
     // Sélection de la liste ul
