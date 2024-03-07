@@ -29,9 +29,9 @@ class Lightbox {
     const lightboxHTML = `
       <div class="lightbox__container1">
         <div class="lightbox__container2">
-          <button class="lightbox__close"></button>
-          <button class="lightbox__next"></button>
-          <button class="lightbox__prev"></button>
+          <button role="button" aria-disabled="false" class="lightbox__close"></button>
+          <button role="button" aria-disabled="false" class="lightbox__next"></button>
+          <button role="button" aria-disabled="false" class="lightbox__prev"></button>
           <img src="${this.url}">
           <p>${this.media.title}</p>
         </div>

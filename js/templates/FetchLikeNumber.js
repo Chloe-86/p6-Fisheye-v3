@@ -1,5 +1,6 @@
 class FetchLikeNumber {
   constructor(photographer, mediaItem,photographerCardMedias) {
+    this.main = main;
     this.photographerInformation = photographer.information;
     this.media = mediaItem;
     this.body = document.querySelector("body");
@@ -31,7 +32,7 @@ class FetchLikeNumber {
     const likeNumber = `
         <article class="card-like">
               <div class="likes">
-                <img src="assets/images/svg/blacklike.svg" class="clicklike">
+                <img src="assets/images/svg/blacklike.svg" class="clicklike" alt="coeur">
                 <p>${this.likeNumberTotal}</p>
               </div>
               <div>
@@ -40,7 +41,7 @@ class FetchLikeNumber {
         </article>
             `;
     wrapper.innerHTML = likeNumber;
-    this.body.appendChild(wrapper);
+    this.main.appendChild(wrapper);
     return wrapper;
   }
 }

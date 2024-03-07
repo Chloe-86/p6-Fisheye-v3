@@ -1,5 +1,6 @@
 class HeaderCardPresentation {
   constructor(photographer) {
+    this.main = main;
     this.photographerInformation = photographer.information;
     this.body = document.querySelector("body");
     this.wrapper = document.createElement("div");
@@ -9,7 +10,7 @@ class HeaderCardPresentation {
   
   renderPhotographerHeader() {
     const header = this.renderHTML();
-    this.body.appendChild(header);
+    this.main.appendChild(header);
     this.addContactButtonListener(); 
   }
 
@@ -20,7 +21,7 @@ class HeaderCardPresentation {
           <h3>${this.photographerInformation.city}, ${this.photographerInformation.country}</h3>
           <p>${this.photographerInformation.tagline}</p>
         </div>
-        <button class="contact_button">Contactez-moi</button>
+        <button role="button" aria-disabled="false" class="contact_button">Contactez-moi</button>
         <div class="photo">
           <img alt="${this.photographerInformation.name}" src="/assets/photographers/${this.photographerInformation.portrait}" />
         </div>

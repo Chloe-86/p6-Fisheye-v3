@@ -1,12 +1,17 @@
 class App {
   constructor() {
     this.photographersApi = new PhotographersApi("/data/photographers.json");
+    this.body = document.querySelector('body');
     this.headerBanner = new HeaderBanner();
+    this.main= document.createElement('div');
+    this.main.id = 'main';
+    this.body.appendChild(this.main);
+   
   }
 
   async pageListPhotographes() {
 
-     this.headerBanner.renderPhotographersHeader();
+    this.headerBanner.renderPhotographersHeader();
 
     const photographers = await this.photographersApi.getPhotographersList();
     this.photographersRenderList = new PhotographersRenderList(photographers);
@@ -23,7 +28,7 @@ class App {
     // console.log(photographer.information)
     // console.log(photographer.medias);
    
-
+    
     //instancier page du photographe
     this.photo = new PhotographerCardMedias(photographer);
 

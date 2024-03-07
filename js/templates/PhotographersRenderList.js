@@ -1,5 +1,6 @@
 class PhotographersRenderList {
   constructor(photographersList) {
+    
     this.photographersList = photographersList;
     this.body = document.querySelector('body');
     this.photographersWrapper = document.createElement("div");
@@ -19,7 +20,7 @@ class PhotographersRenderList {
 
     const photographerCard = `
           <article>
-              <a href="photographer.html?id=${photographerInformation.id}">
+              <a aria-label="cliquez-ici pour ouvvrir la page du photographe ${photographerInformation.name}" href="photographer.html?id=${photographerInformation.id}">
                   <img
                       alt="${photographerInformation.name}"
                       src="/assets/photographers/${photographerInformation.portrait}"

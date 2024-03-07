@@ -10,6 +10,8 @@ class SorterForm {
     this.ProxyRatingSorter = new ProxyRatingSorter();
     this.photographerCardMedias = photographerCardMedias;
     this.photosSection = photographerCardMedias.photosSection;
+    this.gallery = photographerCardMedias.gallery;
+    console.log(this.gallery)
   }
 
   async sorterMedias(sorter) {
@@ -81,13 +83,13 @@ class SorterForm {
 
   render() {
     const sorterForm = `
-      <div class="filter-wrapper">
+     
         <div class="filter">
           <div>
             <p>Trier par</p>
           </div>
           <div>
-            <img src="./assets/images/svg/arrow.svg" alt="fleche">
+            <img src="./assets/images/svg/mini-arrow.svg" alt="fleche">
             <ul>
               <li data-active="popularity" id="pop">Popularité</li>
               <li data-active="ASC" id="date">Date</li>
@@ -95,12 +97,12 @@ class SorterForm {
             </ul>
           </div>
         </div>
-      </div>
+  
     `;
 
     this.wrapper.innerHTML = sorterForm;
     this.onChangeSorter();
-    this.body.appendChild(this.wrapper);
+    this.gallery.appendChild(this.wrapper);
     // Sélection de l'image
     const filterImg = document.querySelector(".filter img");
     // Sélection de la liste ul

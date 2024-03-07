@@ -1,22 +1,27 @@
 class PhotographerCardMedias {
   constructor(photographer, mediaItem) {
+    this.main = main;
     this.photographerInformation = photographer;
     this.media = mediaItem;
     this.body = document.querySelector("body");
     
   }
 
-  createPhotosSection(){
+  createPhotosSection() {
     const photosSection = document.createElement("div");
     photosSection.classList.add("photos_section");
-    this.body.appendChild(photosSection);
+
+    this.gallery = document.createElement("div");
+    this.gallery.classList.add("gallery");
+    this.main.appendChild(this.gallery);
+    this.gallery.appendChild(photosSection);
     this.photosSection = photosSection;
     return photosSection;
   }
 
   renderPhotographerMedia(photographer) {
     this.createPhotosSection();
-    
+
     photographer.medias.forEach((mediaItem) => {
       const template = new PhotographerCardMedias(
         photographer.information,
@@ -29,8 +34,6 @@ class PhotographerCardMedias {
       this.lightbox = new Lightbox(photographer, mediaItem);
     });
   }
-
- 
 
   likeHeartEventListeners() {
     let likes = document.querySelectorAll(".clicklike");
@@ -97,7 +100,7 @@ class PhotographerCardMedias {
     if (typeof image !== "undefined") {
       mediaElement = `<img src="assets/images/sample_photo/${this.photographerInformation.name}/${image}" alt="${this.media.title}">`;
     } else if (typeof isVideo !== "undefined") {
-      mediaElement = `<video autoplay loop controls src="assets/images/sample_photo/${this.photographerInformation.name}/${isVideo} "></video>`;
+      mediaElement = `<video autoplay loop controls aria-label="${this.media.title}" src="assets/images/sample_photo/${this.photographerInformation.name}/${isVideo} "></video>`;
       load = isVideo;
     } else {
       // Gérer le cas où ni l'image ni la vidéo ne sont définies
@@ -108,14 +111,14 @@ class PhotographerCardMedias {
 
       <article class="card">
           <div class="containerImage">
-             <a href="../assets/images/sample_photo/${this.photographerInformation.name}/${load}">
+             <a aria-label="Cliquez ici pour ouvrir la lightbox" href="../assets/images/sample_photo/${this.photographerInformation.name}/${load}"> 
                ${mediaElement}
               </a>
               </div>
               <div class="containerInfo">
                   <p >${this.media.title}</p>
                   <div class="likes"><p>${this.media.likes}</p>
-                      <img src="assets/images/svg/like.svg" class="clicklike">
+                      <img src="assets/images/svg/like.svg" class="clicklike" alt="coeur">
                   </div>
               </div>
           </div>

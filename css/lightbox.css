@@ -14,7 +14,7 @@
 .lightbox__next,
 .lightbox__prev {
   border: none;
-  background: url(/assets/svg/arrow.svg) center center / 100% 100%;
+  background: url(/assets/images/svg/arrow.svg) center center / 100% 100%;
   width: 96px;
   height: 100%;
 
@@ -40,7 +40,7 @@
   top: -35px;
   right: -66px;
   height: 72px;
-  background: url(/assets/svg/close.svg) center center / 72px 72px;
+  background: url(/assets/images/svg/close.svg) center center / 72px 72px;
 }
 .lightbox button {
   opacity: 0.5;
