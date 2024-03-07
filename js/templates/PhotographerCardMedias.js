@@ -57,32 +57,24 @@ class PhotographerCardMedias {
   urlImages(url, photographer, mediaItem, namePerson) {
     let images = document.querySelectorAll(".containerImage img");
 
-    let mediaList = [];
-    mediaList.push(mediaItem);
-
     namePerson = this.photographerInformation.information.name;
-
+   
     images.forEach((img) => {
+    
       img.addEventListener("click", (e) => {
+   
         e.preventDefault();
         // this.lightboxeKill();
         url = e.target.src;
         namePerson = namePerson;
-        this.lightbox = new Lightbox(
-          url,
-          photographer,
-          mediaItem,
-          namePerson,
-          mediaList
-        );
+       
         this.lightbox.setUrl(url);
-        this.lightbox.setList(mediaList);
+
         this.lightbox.render(
           url,
           mediaItem,
           photographer,
-          namePerson,
-          mediaList
+          namePerson
         );
         img.classList.add("clicked-img");
       });

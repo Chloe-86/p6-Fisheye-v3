@@ -1,12 +1,8 @@
 class Lightbox {
-  constructor(url, photographer, mediaItem, list) {
+  constructor(url, photographer) {
     this.photographerInformation = photographer;
-    this.media = mediaItem;
     this.url = url;
-    this.list = list;
-    // Création d'un élément div pour le wrapper du formulaire de tri
     this.wrapper = document.createElement("div");
-    // Sélection de l'élément avec la classe "filter-wrapper" pour le wrapper du formulaire de tri
     this.wrapper.classList.add("lightbox");
     this.filterFormWrapper = document.querySelector("body");
     this.index = 0; // Initialisez l'index à 0
@@ -16,14 +12,8 @@ class Lightbox {
     this.url = url;
   }
 
-  setList(mediaList) {
-    this.list = mediaList;
-  }
-
   render() {
     // Définit le chemin de l'image
-
-    console.log(this.photographerInformation.information.name);
 
     // Définit le HTML de la lightbox
     const lightboxHTML = `
@@ -33,7 +23,7 @@ class Lightbox {
           <button role="button" aria-disabled="false" class="lightbox__next"></button>
           <button role="button" aria-disabled="false" class="lightbox__prev"></button>
           <img src="${this.url}">
-          <p>${this.media.title}</p>
+          <p>${this.photographerInformation.title}</p>
         </div>
         
       </div>
@@ -78,7 +68,7 @@ class Lightbox {
 
   // Méthode pour passer à l'image suivante
   nextImage() {
-    console.log(this.list);
+    console.log(this.photographerInformation);
     this.index = (this.index + 1) % this.list.length;
     const nextMedia = this.list[this.index];
     const imageUrl = `../../assets/images/Sample_photo/${this.photographerInformation.information.name}/${nextMedia.image}`;

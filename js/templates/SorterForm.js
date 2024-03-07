@@ -11,7 +11,6 @@ class SorterForm {
     this.photographerCardMedias = photographerCardMedias;
     this.photosSection = photographerCardMedias.photosSection;
     this.gallery = photographerCardMedias.gallery;
-    console.log(this.gallery)
   }
 
   async sorterMedias(sorter) {
