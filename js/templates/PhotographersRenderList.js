@@ -23,7 +23,7 @@ class PhotographersRenderList {
               <a aria-label="cliquez-ici pour ouvvrir la page du photographe ${photographerInformation.name}" href="photographer.html?id=${photographerInformation.id}">
                   <img
                       alt="${photographerInformation.name}"
-                      src="/assets/photographers/${photographerInformation.portrait}"
+                      src="/assets/images/photographers/${photographerInformation.portrait}"
                   />
               </a>
               <h2>${photographerInformation.name}</h2>

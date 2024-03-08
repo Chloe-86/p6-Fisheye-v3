@@ -1,34 +1,40 @@
 class Lightbox {
-  constructor(url, photographer) {
+  constructor(photographer, mediaItem, newArrayLightboxCopy) {
     this.photographerInformation = photographer;
-    this.url = url;
+    this.mediaItem = mediaItem; 
     this.wrapper = document.createElement("div");
     this.wrapper.classList.add("lightbox");
     this.filterFormWrapper = document.querySelector("body");
-    this.index = 0; // Initialisez l'index à 0
+    this.newArrayLightboxCopy = newArrayLightboxCopy;
+    console.log(this.newArrayLightboxCopy);
+    this.index = 0;
+    this.lightboxHTML;
+    this.url = `/assets/images/Sample_photo/${this.photographerInformation.name}/${this.newArrayLightboxCopy.image});
+    }`;
   }
 
+  setTitle(title) {
+    this.title = title;
+  }
   setUrl(url) {
     this.url = url;
   }
 
   render() {
-    // Définit le chemin de l'image
-
     // Définit le HTML de la lightbox
-    const lightboxHTML = `
+    let lightboxHTML = `
       <div class="lightbox__container1">
         <div class="lightbox__container2">
           <button role="button" aria-disabled="false" class="lightbox__close"></button>
           <button role="button" aria-disabled="false" class="lightbox__next"></button>
           <button role="button" aria-disabled="false" class="lightbox__prev"></button>
           <img src="${this.url}">
-          <p>${this.photographerInformation.title}</p>
+          <p>${this.title}</p>
         </div>
         
       </div>
     `;
-
+  
     // Injecte le HTML de la lightbox dans le wrapper
     this.wrapper.innerHTML = lightboxHTML;
 
@@ -57,32 +63,47 @@ class Lightbox {
     });
   }
 
-  update(newUrl, title) {
-    const imageElement = this.wrapper.querySelector(
-      ".lightbox__container2 img"
-    );
-    const titleElement = this.wrapper.querySelector(".lightbox__container2 p");
-    imageElement.src = newUrl;
-    titleElement.textContent = title;
-  }
-
-  // Méthode pour passer à l'image suivante
   nextImage() {
-    console.log(this.photographerInformation);
-    this.index = (this.index + 1) % this.list.length;
-    const nextMedia = this.list[this.index];
-    const imageUrl = `../../assets/images/Sample_photo/${this.photographerInformation.information.name}/${nextMedia.image}`;
-    this.update(imageUrl, nextMedia.title);
+    if (this.index < this.newArrayLightboxCopy.length - 1) {
+      this.index++;
+      this.update();
+    }
   }
 
-  // Méthode pour passer à l'image précédente
   prevImage() {
-    this.index = (this.index - 1 + this.list.length) % this.list.length;
-    const prevMedia = this.list[this.index];
-    const imageUrl = `../../assets/images/Sample_photo/${this.photographerInformation.information.name}/${prevMedia.image}`;
-    this.update(imageUrl, prevMedia.title);
+    if (this.index > 0) {
+      this.index--;
+      this.update();
+    }
   }
 
+  update() {
+    const currentImage = this.newArrayLightboxCopy[this.index];
+    const imageElement = this.wrapper.querySelector(".lightbox__container2 img");
+    const titleElement = this.wrapper.querySelector(".lightbox__container2 p");
+
+    if (currentImage) {
+      if (currentImage.image === undefined) {
+              // Créer un élément vidéo et le configurer
+              const videoElement = document.createElement("video");
+              videoElement.autoplay = true;
+              videoElement.loop = true;
+              videoElement.controls = true;
+              videoElement.setAttribute("aria-label", currentImage.title);
+              videoElement.src = `/assets/images/Sample_photo/${this.photographerInformation.name}/${currentImage.video}`;
+              
+              // Remplacer l'élément img existant par l'élément vidéo
+              imageElement.parentNode.replaceChild(videoElement, imageElement);
+            } else {
+              // Si ce n'est pas une vidéo, mettre à jour simplement l'attribut src de l'élément img
+              imageElement.src = `/assets/images/Sample_photo/${this.photographerInformation.name}/${currentImage.image}`;
+            }
+
+
+        imageElement.src = `/assets/images/Sample_photo/${this.photographerInformation.name}/${currentImage.image}`;
+        titleElement.textContent = currentImage.title;
+    }
+}
   closeModal() {
     this.filterFormWrapper.removeChild(this.wrapper);
   }

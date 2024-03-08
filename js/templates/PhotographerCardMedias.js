@@ -4,7 +4,7 @@ class PhotographerCardMedias {
     this.photographerInformation = photographer;
     this.media = mediaItem;
     this.body = document.querySelector("body");
-    
+    this.newArrayLightbox = [];
   }
 
   createPhotosSection() {
@@ -22,6 +22,30 @@ class PhotographerCardMedias {
   renderPhotographerMedia(photographer) {
     this.createPhotosSection();
 
+    let newArrayLightbox = [];
+
+    for (let i = 0; i < photographer.medias.length; i++) {
+      let media = photographer.medias[i];
+      let mediaObject;
+
+      if (media.image === undefined) {
+        mediaObject = {
+          video: media.video,
+          title: media.title,
+        };
+      } else {
+        mediaObject = {
+          image: media.image,
+          title: media.title,
+        };
+      }
+
+      newArrayLightbox.push(mediaObject);
+    }
+    // Créer une copie de newArrayLightbox
+    const newArrayLightboxCopy = newArrayLightbox.slice();
+
+
     photographer.medias.forEach((mediaItem) => {
       const template = new PhotographerCardMedias(
         photographer.information,
@@ -30,9 +54,16 @@ class PhotographerCardMedias {
 
       this.photosSection.appendChild(template.getUserCardMedia());
       this.likeHeartEventListeners(mediaItem, photographer.information);
-      this.urlImages(photographer.information.url, photographer, mediaItem);
-      this.lightbox = new Lightbox(photographer, mediaItem);
+      this.urlImages(
+        photographer.information.url,
+        photographer,
+        mediaItem,
+        photographer,
+        photographer.information,
+        newArrayLightboxCopy
+      );
     });
+    this.lightbox = new Lightbox(photographer.information, photographer.medias, newArrayLightboxCopy);
   }
 
   likeHeartEventListeners() {
@@ -54,29 +85,29 @@ class PhotographerCardMedias {
     });
   }
 
-  urlImages(url, photographer, mediaItem, namePerson) {
+  urlImages(url, photographer, mediaItem, newArrayLightboxCopy) {
     let images = document.querySelectorAll(".containerImage img");
 
-    namePerson = this.photographerInformation.information.name;
-   
     images.forEach((img) => {
-    
       img.addEventListener("click", (e) => {
-   
         e.preventDefault();
-        // this.lightboxeKill();
-        url = e.target.src;
-        namePerson = namePerson;
-       
-        this.lightbox.setUrl(url);
 
-        this.lightbox.render(
-          url,
-          mediaItem,
-          photographer,
-          namePerson
-        );
-        img.classList.add("clicked-img");
+        const parentContainer = e.target.closest(".card");
+        if (parentContainer) {
+          // Récupérer l'élément p à l'intérieur du parent
+          const titleElement =
+            parentContainer.querySelector(".containerInfo p");
+          if (titleElement) {
+            // Récupérer le titre
+            let title = titleElement.textContent;
+
+            this.lightbox.setTitle(title);
+          }
+        }
+        url = e.target.src;
+        this.lightbox.setUrl(url);
+        this.lightbox.render(url, mediaItem, photographer, newArrayLightboxCopy);
+
       });
     });
   }

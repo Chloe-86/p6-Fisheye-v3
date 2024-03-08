@@ -17,7 +17,7 @@ class HeaderBanner {
     renderImg() {
         const img = document.createElement("img");
         img.classList.add("logo");
-        img.src = "assets/images/logo.png";
+        img.src = "assets/icons/logo.png";
         img.setAttribute('alt', 'Fisheye logo');
         this.header.appendChild(img);
     }
