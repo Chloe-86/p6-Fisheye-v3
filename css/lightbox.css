@@ -14,7 +14,7 @@
 .lightbox__next,
 .lightbox__prev {
   border: none;
-  background: url(/assets/images/svg/arrow.svg) center center / 100% 100%;
+  background: url(/assets/icons/svg/arrow.svg) center center / 100% 100%;
   width: 96px;
   height: 100%;
 

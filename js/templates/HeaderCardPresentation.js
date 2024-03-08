@@ -23,7 +23,7 @@ class HeaderCardPresentation {
         </div>
         <button role="button" aria-disabled="false" class="contact_button">Contactez-moi</button>
         <div class="photo">
-          <img alt="${this.photographerInformation.name}" src="/assets/photographers/${this.photographerInformation.portrait}" />
+          <img alt="${this.photographerInformation.name}" src="/assets/images/photographers/${this.photographerInformation.portrait}" />
         </div>
       `;
 

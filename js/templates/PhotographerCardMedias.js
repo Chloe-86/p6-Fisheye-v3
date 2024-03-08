@@ -141,7 +141,7 @@ class PhotographerCardMedias {
               <div class="containerInfo">
                   <p >${this.media.title}</p>
                   <div class="likes"><p>${this.media.likes}</p>
-                      <img src="assets/images/svg/like.svg" class="clicklike" alt="coeur">
+                      <img src="assets/icons/svg/like.svg" class="clicklike" alt="coeur">
                   </div>
               </div>
           </div>

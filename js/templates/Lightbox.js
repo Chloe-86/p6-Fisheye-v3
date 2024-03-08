@@ -6,7 +6,6 @@ class Lightbox {
     this.wrapper.classList.add("lightbox");
     this.filterFormWrapper = document.querySelector("body");
     this.newArrayLightboxCopy = newArrayLightboxCopy;
-    console.log(this.newArrayLightboxCopy);
     this.index = 0;
     this.lightboxHTML;
     this.url = `/assets/images/Sample_photo/${this.photographerInformation.name}/${this.newArrayLightboxCopy.image});

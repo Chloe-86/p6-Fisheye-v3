@@ -32,7 +32,7 @@ class FetchLikeNumber {
     const likeNumber = `
         <article class="card-like">
               <div class="likes">
-                <img src="assets/images/svg/blacklike.svg" class="clicklike" alt="coeur">
+                <img src="assets/icons/svg/blacklike.svg" class="clicklike" alt="coeur">
                 <p>${this.likeNumberTotal}</p>
               </div>
               <div>

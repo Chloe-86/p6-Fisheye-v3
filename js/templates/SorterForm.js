@@ -88,7 +88,7 @@ class SorterForm {
             <p>Trier par</p>
           </div>
           <div>
-            <img src="./assets/images/svg/mini-arrow.svg" alt="fleche">
+            <img src="./assets/icons/svg/mini-arrow.svg" alt="fleche">
             <ul>
               <li data-active="popularity" id="pop">Popularité</li>
               <li data-active="ASC" id="date">Date</li>
