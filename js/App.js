@@ -27,10 +27,12 @@ class App {
     // console.log(photographer)
     // console.log(photographer.information)
     // console.log(photographer.medias);
-   
+    this.fetchLike = new FetchLikeNumber(photographer);
+ 
+    
     
     //instancier page du photographe
-    this.photo = new PhotographerCardMedias(photographer);
+    this.photo = new PhotographerCardMedias(photographer, null, this.fetchLike);
 
     //instancier le header
     this.header = new HeaderCardPresentation(photographer);
@@ -55,8 +57,8 @@ class App {
       
     );
    
-    const fetchLike = new FetchLikeNumber(photographer);
-    fetchLike.render();
+    this.fetchLike.fetchLikeNumber();
+    this.fetchLike.render();
   }
 }
 

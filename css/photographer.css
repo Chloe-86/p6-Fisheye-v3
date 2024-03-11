@@ -187,15 +187,23 @@
 .clicklike {
   cursor: pointer;
 }
+.likeWrapper{
+  position: fixed;
+  bottom: -21px;
+  right: 36px;
+  z-index: 10;
+ 
+}
 .card-like {
-  max-width: 376px;
-  max-height: 89px;
+  width: 376px; 
+  max-height: 89px; 
   color: black;
   border-radius: 5px;
   background: #db8876;
   display: flex;
   justify-content: space-between;
-  padding: 31px 21px;
+  padding: 34px 21px;
+  gap: 65px;
 }
 .card-like p {
   color: #000;

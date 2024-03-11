@@ -40,7 +40,7 @@
   top: -35px;
   right: -66px;
   height: 72px;
-  background: url(/assets/images/svg/close.svg) center center / 72px 72px;
+  background: url(/assets/icons/svg/close.svg) center center / 72px 72px;
 }
 .lightbox button {
   opacity: 0.5;

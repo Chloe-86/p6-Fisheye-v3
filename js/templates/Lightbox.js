@@ -6,6 +6,7 @@ class Lightbox {
     this.wrapper.classList.add("lightbox");
     this.filterFormWrapper = document.querySelector("body");
     this.newArrayLightboxCopy = newArrayLightboxCopy;
+
     this.index = 0;
     this.lightboxHTML;
     this.url = `/assets/images/Sample_photo/${this.photographerInformation.name}/${this.newArrayLightboxCopy.image});
@@ -63,6 +64,7 @@ class Lightbox {
   }
 
   nextImage() {
+
     if (this.index < this.newArrayLightboxCopy.length - 1) {
       this.index++;
       this.update();

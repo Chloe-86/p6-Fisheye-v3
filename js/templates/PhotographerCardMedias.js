@@ -1,10 +1,12 @@
 class PhotographerCardMedias {
-  constructor(photographer, mediaItem) {
+  constructor(photographer, mediaItem, fetchLikeNumberInstance) {
     this.main = main;
     this.photographerInformation = photographer;
     this.media = mediaItem;
     this.body = document.querySelector("body");
     this.newArrayLightbox = [];
+    this.fetchLikeNumberInstance = fetchLikeNumberInstance;
+
   }
 
   createPhotosSection() {
@@ -45,7 +47,6 @@ class PhotographerCardMedias {
     // Créer une copie de newArrayLightbox
     const newArrayLightboxCopy = newArrayLightbox.slice();
 
-
     photographer.medias.forEach((mediaItem) => {
       const template = new PhotographerCardMedias(
         photographer.information,
@@ -63,7 +64,11 @@ class PhotographerCardMedias {
         newArrayLightboxCopy
       );
     });
-    this.lightbox = new Lightbox(photographer.information, photographer.medias, newArrayLightboxCopy);
+    this.lightbox = new Lightbox(
+      photographer.information,
+      photographer.medias,
+      newArrayLightboxCopy
+    );
   }
 
   likeHeartEventListeners() {
@@ -80,6 +85,9 @@ class PhotographerCardMedias {
           let newLikeValue = likeNumberValue + 1;
           likeNumber.textContent = newLikeValue;
           like.classList.add("clicked");
+
+          this.fetchLikeNumberInstance.fetchLikeNumber();
+          this.fetchLikeNumberInstance.render();
         }
       });
     });
@@ -106,8 +114,12 @@ class PhotographerCardMedias {
         }
         url = e.target.src;
         this.lightbox.setUrl(url);
-        this.lightbox.render(url, mediaItem, photographer, newArrayLightboxCopy);
-
+        this.lightbox.render(
+          url,
+          mediaItem,
+          photographer,
+          newArrayLightboxCopy
+        );
       });
     });
   }

@@ -40,9 +40,9 @@ class SorterForm {
           this.photosSection.appendChild(
             template.getUserCardMedia(this.photographerInformation.name)
           ); 
-          // this.PhotographerCardMedias.likeHeartEventListeners(mediaItem, photographer.information);
-          // this.PhotographerCardMedias.urlImages(photographer.information.url, photographer, mediaItem);
-          // this.PhotographerCardMedias.lightbox = new Lightbox(photographer, mediaItem);
+          // this.photographerCardMedias.likeHeartEventListeners(mediaItem, photographer.information);
+          // this.photographerCardMedias.urlImages(photographer.information.url, photographer, mediaItem);
+          // this.photographerCardMedias.lightbox = new Lightbox(photographer, mediaItem);
         });
       }
     } else {
